@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: momentum-approval
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn approval_server:app --bind 0.0.0.0:$PORT --workers 1 --timeout 60
+    plan: free
+
+    # Environment variables — set values in the Render dashboard (not here)
+    # Never put actual secrets in this file
+    envVars:
+      - key: ALPACA_API_KEY
+        sync: false          # Render will prompt you to fill this in
+      - key: ALPACA_API_SECRET
+        sync: false
+      - key: ALPACA_BASE_URL
+        value: https://paper-api.alpaca.markets
+      - key: GMAIL_SENDER
+        value: Sanjayja@gmail.com
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: GMAIL_RECIPIENT
+        value: Sanjayja@gmail.com
+      - key: RENDER_URL
+        sync: false          # Fill in after Render assigns your URL
